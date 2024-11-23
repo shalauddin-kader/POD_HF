@@ -1,49 +1,35 @@
-from stability_sdk import client
+import requests
 import os
 
-# API Key for Stability AI
-STABILITY_API_KEY = "sk-vXI2eJHXWOadIr8a2gCbES8IWFEBiVAwYvY9IjKqCGi24SPT"
+# Hugging Face API token
+HUGGINGFACE_API_TOKEN = "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"
 
-# Define ARTIFACT_IMAGE manually (used in Stability API responses)
-ARTIFACT_IMAGE = 1
-
-def generate_image_stability_api(prompt):
+def generate_image_huggingface(prompt):
     """
-    Generate an image using Stability AI's API.
+    Generate an image using Hugging Face's Stable Diffusion API.
     """
-    stability_api = client.StabilityInference(
-        key=STABILITY_API_KEY,
-        verbose=True,  # Enables detailed logging for debugging
-        engine="stable-diffusion-v1-4"  # Ensure this matches the correct engine
-    )
+    api_url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-v1-4"
+    headers = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
 
-    # Generate the image
-    response = stability_api.generate(
-        prompt=prompt,
-        steps=30,  # Adjust steps for desired quality
-        width=512,  # Recommended resolution for better results
-        height=512,
-        cfg_scale=7.0,  # Guidance scale for creativity
-    )
+    payload = {"inputs": prompt}
+    response = requests.post(api_url, headers=headers, json=payload)
 
-    # Save the first returned image
-    output_path = "static/generated_images/output_image_1.png"
-    for resp in response:
-        if hasattr(resp, "artifacts"):
-            for artifact in resp.artifacts:
-                if artifact.type == ARTIFACT_IMAGE:  # Image artifact type
-                    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-                    with open(output_path, "wb") as img_file:
-                        img_file.write(artifact.binary)
-    return output_path
+    if response.status_code == 200:
+        output_path = "static/generated_images/output_image_1.png"
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)  # Ensure directory exists
+        with open(output_path, "wb") as img_file:
+            img_file.write(response.content)
+        return output_path
+    else:
+        raise Exception(f"Error: {response.status_code}, {response.text}")
 
 
-def generate_image(prompt, method="stability"):
+def generate_image(prompt, method="huggingface"):
     """
     Wrapper function to generate an image.
-    Only Stability AI API is supported in this version.
+    Only Hugging Face is supported in this version.
     """
-    if method == "stability":
-        return generate_image_stability_api(prompt)
+    if method == "huggingface":
+        return generate_image_huggingface(prompt)
     else:
         raise ValueError(f"Unsupported method: {method}")
