@@ -1,5 +1,2 @@
 flask
-stability-sdk
-pillow
 requests
-python-dotenv
