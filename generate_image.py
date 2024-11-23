@@ -8,7 +8,7 @@ def generate_image_huggingface(prompt):
     """
     Generate an image using Hugging Face's Stable Diffusion API.
     """
-    api_url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-v1-4"
+    api_url = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
 
     payload = {"inputs": prompt}
