@@ -13,7 +13,16 @@ def generate_image_huggingface(prompt):
     api_url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-2"
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
 
-    payload = {"inputs": prompt}
+    # payload = {"inputs": prompt}
+
+    payload = {
+        "inputs": prompt,
+        "parameters": {
+            "guidance_scale": 7.5,  # Controls prompt adherence (adjustable)
+            "num_inference_steps": 50  # Higher = better quality (but slower)
+        }
+    }
+    
     retries = 5  # Number of retries
     wait_time = 60  # Time to wait (in seconds) between retries
 
