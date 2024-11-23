@@ -12,8 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const placeholderText = document.getElementById("placeholder-text");
     const downloadLayout = document.getElementById("download-layout");
     const finalDesignContainer = document.getElementById("final-design-container");
+    const outputSection = document.getElementById("output-section");
+    const generatedImage = document.getElementById("generated-image");
 
     // Initialize the UI
+    outputSection.style.display = "none"; // Hide the output section initially
     if (downloadBtn) {
         downloadBtn.disabled = true; // Disable download button initially
         downloadBtn.style.opacity = 0.5; // Dim it to indicate it's disabled
@@ -52,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Reset and hide the download layout
         downloadLayout.style.display = "none";
         finalDesignContainer.style.backgroundImage = ""; // Clear final design container
+        outputSection.style.display = "none"; // Hide the output section
 
         // Disable download button during generation
         if (downloadBtn) {
@@ -67,14 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // Update the design container with the new image
-                    placeholderText.style.display = "none"; // Hide placeholder text
-                    designContainer.style.backgroundImage = `url(${data.image_url}?t=${new Date().getTime()})`; // Prevent caching
-                    designContainer.style.display = "block"; // Show design container
-
-                    // Show the download layout with the new design
-                    downloadLayout.style.display = "block";
-                    finalDesignContainer.style.backgroundImage = `url(${data.image_url}?t=${new Date().getTime()})`;
+                    // Show the generated image
+                    spinner.style.display = "none"; // Hide spinner
+                    outputSection.style.display = "block"; // Show the output section
+                    generatedImage.src = `${data.image_url}?t=${new Date().getTime()}`; // Prevent caching
 
                     // Enable the download button
                     if (downloadBtn) {
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .catch(err => alert(`Error generating design: ${err}`))
             .finally(() => {
-                spinner.style.display = "none"; // Hide spinner
+                spinner.style.display = "none"; // Ensure spinner is hidden
             });
     });
 
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (downloadBtn) {
         downloadBtn.addEventListener("click", () => {
             const link = document.createElement("a");
-            link.href = "/static/generated_images/output_image_1.png"; // Use the generated image path
+            link.href = generatedImage.src; // Use the displayed image source
             link.download = `tshirt_design_${new Date().getTime()}.png`; // Add timestamp for uniqueness
             link.click();
         });
