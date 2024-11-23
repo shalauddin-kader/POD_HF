@@ -78,21 +78,18 @@
                 <button id="download">Download Design</button>
             </div> -->
 
-            <!-- Download Layout (Hidden by Default) -->
-            <div id="download-layout" style="display: none;">
-                <h2>Your Design is Ready!</h2>
-                <div class="tshirt-preview">
-                    <img id="tshirt-result" src="/static/images/tshirt.png" alt="T-Shirt">
-                    <div class="design-container" id="final-design-container">
-                        <!-- This will display the generated design -->
-                    </div>
-                </div>
-                <div class="actions">
-                    <button id="download">Download Design</button>
-                </div>
-            </div>
-
         </div>
+    </div>
+
+    <div class="container">
+        <!-- Download Layout (Hidden by Default) -->
+        <div id="output-section" style="display: none; text-align: center; margin-top: 20px;">
+        <h2>Your Design</h2>
+        <img id="generated-image" src="" alt="Generated Design" style="max-width: 100%; height: auto; margin: 20px 0;">
+        <div class="actions">
+            <button id="download">Download Design</button>
+        </div>
+    </div>
     </div>
 
     <script src="/static/js/script.js"></script>
