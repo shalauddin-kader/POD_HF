@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Color Selection Code
+    // DOM Elements
     const colorOptions = document.querySelectorAll('.color-option');
     const tshirtImage = document.getElementById('tshirt');
     const regenerateBtn = document.getElementById("regenerate");
@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const sizeSelector = document.getElementById("size");
     const promptInput = document.getElementById("prompt");
     const placeholderText = document.getElementById("placeholder-text");
+    const downloadLayout = document.getElementById("download-layout");
+    const finalDesignContainer = document.getElementById("final-design-container");
 
     // Initialize the UI
     if (downloadBtn) {
@@ -47,6 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
         designContainer.style.display = "none";
         placeholderText.style.display = "block"; // Show placeholder text
 
+        // Reset and hide the download layout
+        downloadLayout.style.display = "none";
+        finalDesignContainer.style.backgroundImage = ""; // Clear final design container
+
         // Disable download button during generation
         if (downloadBtn) {
             downloadBtn.disabled = true;
@@ -65,6 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     placeholderText.style.display = "none"; // Hide placeholder text
                     designContainer.style.backgroundImage = `url(${data.image_url}?t=${new Date().getTime()})`; // Prevent caching
                     designContainer.style.display = "block"; // Show design container
+
+                    // Show the download layout with the new design
+                    downloadLayout.style.display = "block";
+                    finalDesignContainer.style.backgroundImage = `url(${data.image_url}?t=${new Date().getTime()})`;
 
                     // Enable the download button
                     if (downloadBtn) {
