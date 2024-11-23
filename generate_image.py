@@ -3,7 +3,7 @@ import requests
 import os
 
 # Hugging Face API token
-HUGGINGFACE_API_TOKEN = "your_huggingface_token_here"
+HUGGINGFACE_API_TOKEN = "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"
 
 def generate_image_huggingface(prompt):
     """
