@@ -9,7 +9,8 @@ def generate_image_huggingface(prompt):
     """
     Generate an image using Hugging Face's Stable Diffusion API with retry logic.
     """
-    api_url = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
+    # api_url = "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5"
+    api_url = "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-3"
     headers = {"Authorization": f"Bearer {HUGGINGFACE_API_TOKEN}"}
 
     payload = {"inputs": prompt}
