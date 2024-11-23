@@ -19,15 +19,15 @@ def index():
 @app.route('/generate', methods=['POST'])
 def generate():
     """
-    API endpoint to generate an image using Stability AI.
+    API endpoint to generate an image using Hugging Face.
     """
     try:
         # Parse prompt from the incoming JSON request
         data = request.get_json()
         prompt = data.get("prompt", "Default design prompt")  # Fallback prompt
         
-        # Generate a new image using Stability AI
-        output_path = generate_image(prompt, method="stability")
+        # Generate a new image using Hugging Face
+        output_path = generate_image(prompt, method="huggingface")
         return jsonify({'success': True, 'image_url': '/' + output_path})
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
