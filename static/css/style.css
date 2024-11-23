@@ -247,3 +247,23 @@ h1, h2, h3, h4, h5, h6 {
         transform: translate(-50%, -50%) rotate(360deg);
     }
 }
+
+#download-layout {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#final-design-container {
+    position: absolute;
+    top: 30%; /* Adjust position relative to T-shirt */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px; /* Match your desired circle size */
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
